@@ -31,7 +31,20 @@ batch批量梯度下降 计算下降最快的方向 求导 每次进行参数更
 正规方程法（最小二乘）
 >注：对于那些不可逆的矩阵（通常是因为特征之间不独立，如同时包含英尺为单位的尺寸和米为单位的尺寸两个特征，也有可能是特征数量大于训练集的数量），正规方程方法是不能用的
 
-![截屏2020-03-01下午6.08.03](/Users/pluto/Desktop/截屏2020-03-01下午6.08.03.png)
+![截屏2020-03-01下午6.08.03](https://tva1.sinaimg.cn/large/00831rSTly1gcevmq8btoj31820dqn00.jpg)
+
+即：均方误差最小化
+单元线性 
+
+![截屏2020-03-02上午12.07.23](https://tva1.sinaimg.cn/large/00831rSTly1gcevmb5f6qj30g8078my1.jpg)
+
+多元线性转为矩阵
+
+![截屏2020-03-02上午12.07.47](https://tva1.sinaimg.cn/large/00831rSTly1gcevmkmquqj30fu030aac.jpg)
+**w为（w:b）**
+当矩阵为可逆时得到结果
+
+![截屏2020-03-02上午12.14.02](https://tva1.sinaimg.cn/large/00831rSTly1gcevsfav04j309u02qdfx.jpg)
 
 
 
