@@ -45,3 +45,7 @@ float_arr=arr.astype(np.float64)
 string_类型长度固定 过长会被截掉
 
 #### 数组运算
+
+切片 [stat:end:steps]
+
+数据字典  update（）更新字典为新字典
