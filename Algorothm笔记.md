@@ -50,10 +50,38 @@ batch批量梯度下降 计算下降最快的方向 求导 每次进行参数更
 
 ### 逻辑回归
 
+分类问题 与预测值为离散值
+sigmoid function逻辑回归
+```1 / (1 + np.exp(-z))```
+
+cost function构建
+
+![截屏2020-03-02下午7.37.16](https://tva1.sinaimg.cn/large/00831rSTly1gcftenhml2j30ey02gwen.jpg)
+其中，![54249cb51f0086fa6a805291bf2639f1](https://tva1.sinaimg.cn/large/00831rSTly1gcftg9fygyj30ev01t3yi.jpg)
+
+代入后得到最终代价函数
+
+![截屏2020-03-02下午7.39.55](https://tva1.sinaimg.cn/large/00831rSTly1gcfthqgarqj30sy02m0t3.jpg)
+然后进行梯度下降算法求θ
+
+
+
+一些梯度下降算法之外的选择： 除了梯度下降算法以外，还有一些常被用来令代价函数最小的算法，这些算法更加复杂和优越，而且通常不需要人工选择学习率，通常比梯度下降算法要更加快速。有：**共轭梯度**（**Conjugate Gradient**），**局部优化法**(**Broyden fletcher goldfarb shann,BFGS**)和**有限内存局部优化法**(**LBFGS**) ，**fminunc**
+
+
+
+**共轭梯度**
+
+**局部优化法**
+
+**有限内存局部优化法**
+
+
 
 
 
 ### Onehot编码
+
 
 
 ### Normalization
