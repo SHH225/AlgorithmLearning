@@ -128,11 +128,59 @@ PCA主成分分析（降维）
 
 令L=正则项，此时我们的任务变成在L约束下求出J0取最小值的解。
 
+因为L函数有很多『突出的角』（二维情况下四个，多维情况下更多），J0与这些角接触的机率会远大于与LLL其它部位接触的机率，而在这些角上，会有很多权值等于0，这就是为什么L1正则化可以产生稀疏模型，进而可以用于特征选择。
+
+<img src="https://tva1.sinaimg.cn/large/00831rSTly1gch1u29ijdj308u089js0.jpg" alt="20160904184428459" style="zoom:50%;" />
+
+
+
+正则参数lamda 越大，越容易在x=0处取得最小值
 
 
 * L2正则化：Ridge回归
 可以防止模型过拟合（overfitting）；一定程度上，L1也可以防止过拟合
-权值向量ww中各个元素的平方和然后再求平方根
+权值向量w中各个元素的平方和然后再求平方根,L2损失函数：
+
+<img src="https://tva1.sinaimg.cn/large/00831rSTly1gch1uytqgtj309c032glm.jpg" alt="截屏2020-03-03下午9.15.12" style="zoom:50%;" />
+
+<img src="https://tva1.sinaimg.cn/large/00831rSTly1gch20l6e65j308u089q3l.jpg" alt="20160904184646963" style="zoom:50%;" />
+
+拟合过程中通常都倾向于让权值尽可能小，适应不同的数据集，也在一定程度上避免了过拟合现象，抗扰动能力强
+
+L2正则化的梯度下降公示：
+
+<img src="https://tva1.sinaimg.cn/large/00831rSTly1gch24ehzh7j30mc03u3yv.jpg" alt="截屏2020-03-03下午9.23.52" style="zoom:50%;" />
+
+比正常回归的多的部分（其中lamda为正则系数）
+
+正则参数lamda 越大，theta 衰减越快，求costfunction最值时参数也会越小
+
+#### L1、L2比较分析
+
+L1-norm(范数)，也叫作最小绝对偏差（leastabsolute deviations, LAD），最小绝对误差（least absolute errors，LAE）.它是最小化目标值yi和估计值f(xi)绝对差值的求和。
+
+L2-norm(范数)也称为最小均方(least squares)，它是最小化目标值yi和估计值f(xi)平方和。
+
+**鲁棒性（Robustness）：**最小绝对值偏差的方法应用领域很广，相比最小均方的方法，它的鲁棒性更好，LAD能对数据中的异常点有很好的**抗干扰能力**，异常点可以安全的和高效的忽略，这对研究帮助很大。
+如果异常值对研究很重要，最小均方误差则是更好的选择。
+
+对于L2-norm，由于是均方误差，如果误差>1的话，那么平方后，相比L-norm而言，误差就会被放大很多。因此模型会对样例更敏感。如果样例是一个异常值，模型会调整最小化异常值的情况，以牺牲其它更一般样例为代价，因为相比单个异常样例，那些一般的样例会得到更小的损失误差。
+
+**稳定性：**LAD方法的不稳定属性意思是，对于一个书评调整的数据集，回归线可能会跳跃很大
+
+![20170920234145310](https://tva1.sinaimg.cn/large/00831rSTly1gch65880lnj30o109k76i.jpg)
+
+这里的稳定性指的是对于 特征点的微调所导致的回归线的变动，微调之后 以及大调之后回归变化，所以l1比l2在此方面更具有稳定性。
+
+**解决方案唯一性** 对于一个问题的手链方式l2只有一种最短，l1路径长度相同情况下手链方式有可能不同
+
+![20170920234250809](https://tva1.sinaimg.cn/large/00831rSTly1gch69p8ar6j30ao0asq46.jpg)
+
+**内置的特征选择（Built-in feature selection）**：这是L1-norm经常被提及的一个优点，而L2-norm没有。这实际上是L1-norm的一个结果，L1-norm往往会使系数变得**稀疏**（sparse coefficients），易于进行特征选择。假设模型有100个系数，但是有10个非零的系数，这就是说，其它90个预测器在预测目标值上是没有用的。L2-norm往往会有非稀疏的系数（non-sparse coefficients），没有这个特点。
+**稀疏性（Sparsity）**：这主要是一个向量或矩阵中只有很少的非零（non-zero）条目（entries）。L1-norm有能产生许多零值或非常小的值的系数的属性，很少有大的系数。
+**计算效率（Computational efficiency）：**L1-norm没有一个解析解（analytical solution），但是L2-nom有，这使得L2-norm可以被高效的计算。可是，L1-norm的解有稀疏的属性，它可以和稀疏算法一起用，这可以是计算更加高效。
+
+###  PCA主成分分析
 
 
 
