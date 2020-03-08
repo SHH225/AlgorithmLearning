@@ -268,28 +268,75 @@ PCA 的数学推导可以从最大可分型和最近重构性两方面进行，�
 
 **例子：**
 
-训练集中的样本形如：![[公式]](https://www.zhihu.com/equation?tex=%5Cleft%5B%5Ctextbf%7Bx%7D%2C%5Cbar%7B%5Ctextbf%7By%7D%7D%5Cright%5D%3D%5Cleft%5B%5Cleft%28x_%7B1%7D%2Cx_%7B2%7D%2C%5Cdots%2Cx_%7Bn_0%7D%5Cright%29%5ET%2C+%5C+%5Cleft%28%5Cbar%7By%7D_%7B1%7D%2C%5Cbar%7By%7D_%7B2%7D%2C%5Cdots%2C%5Cbar%7By%7D_%7Bn_K%7D%5Cright%29%5ET%5Cright%5D)。输入包含![[公式]](https://www.zhihu.com/equation?tex=n_0)个值，目标值包含![[公式]](https://www.zhihu.com/equation?tex=n_K)个值，分别对应神经网络的输入／输出维度。训练这样进行：将训练集中的样本一个接一个提交给神经网络。神经网络对样本输入![[公式]](https://www.zhihu.com/equation?tex=%5Ctextbf%7Bx%7D)计算输出![[公式]](https://www.zhihu.com/equation?tex=%5Ctextbf%7By%7D)，然后计算样本目标值与输出的平方和误差：
-
-![equation](/Users/pluto/Desktop/equation.svg)
-
-视输入![[公式]](https://www.zhihu.com/equation?tex=%5Ctextbf%7Bx%7D)为固定值，把 E 当作全体权值![[公式]](https://www.zhihu.com/equation?tex=%5Ctextbf%7BW%7D%3D%5Cleft%5C%7Bw_%7Bji%7D%5E%7B%28k%29%7D%5Cright%5C%7D)的函数。求 E 的梯度![[公式]](https://www.zhihu.com/equation?tex=%5Ctriangledown+E)，然后用下式更新全体权值：
 
 
+<img src="https://tva1.sinaimg.cn/large/00831rSTly1gcmvoj83tej30q40kgq7b.jpg" alt="853467-20160630142019140-402363317" style="zoom: 33%;" />
 
-![[公式]](https://www.zhihu.com/equation?tex=%5Ctextbf%7BW%7D%5Cleft%28s%2B1%5Cright%29%3D%5Ctextbf%7BW%7D%5Cleft%28s%5Cright%29-%5Ceta+%5Ctriangledown+E+%5Cquad%5Cleft%5B2.2%5Cright%5D)
+通过一个实际例子推导反向传播更新网络权重的过程。
+
+* 前向传播：计算各节点数值
+
+  **权值和：**
+
+  net(h1) =w1 * i1+w2 * i2 + b1*1
+
+  net(h2) = w3 * i1+w4 * i2+ b1*1
+
+  **激活函数计算（激活值）：**作为下一层的输入
+
+  out(h1) = sigmoid(net(h1))
+
+  out(h2) = sigmoid(net(h2))
+
+  **隐藏层权值和：**
+
+  net(o1)=w5 * out(h1) + w6 * out(h2) +b2 * 1
+
+  net(o2)=w7 * out(h1) + w8 * out(h2) + b2 * 1
+
+  **激活输出：**
+
+  out(o1) = sigmoid(net(o1))
+
+  out(o2) = sigmoid(net(o2))
+
+* 反向传播
+
+  总误差计算：
+
+  <img src="https://tva1.sinaimg.cn/large/00831rSTly1gcmw8wzjodj30dg02ugln.jpg" alt="853467-20160630151201812-1014280864" style="zoom:50%;" />
+
+  E(total)=E(o1)+E(o2)//target为真实值
+
+  权值更新：
+
+  以权重参数w5为例，如果我们想知道w5对整体误差产生了多少影响，可以用整体误差对w5求偏导求出：（链式法则）
+
+  <img src="https://tva1.sinaimg.cn/large/00831rSTly1gcmwmzzme5j30t80e8acr.jpg" alt="853467-20160630152018906-1524325812" style="zoom:50%;" />
 
 
 
-[2.2] 是梯度下降法的更新式。其中![[公式]](https://www.zhihu.com/equation?tex=%5Ceta)是步长，s 是迭代次数。梯度矩阵![[公式]](https://www.zhihu.com/equation?tex=%5Ctriangledown+E)由 E 对每一个权重![[公式]](https://www.zhihu.com/equation?tex=w_%7Bji%7D%5E%7B%28k%29%7D)的偏导数![[公式]](https://www.zhihu.com/equation?tex=%5Cfrac%7B%5Cpartial+E%7D%7B%5Cpartial+w_%7Bji%7D%5E%7B%28k%29%7D%7D+)构成。式 [2.2] 等价于对每一个权重进行更新：
+分别计算每一个式子
 
+<img src="https://tva1.sinaimg.cn/large/00831rSTly1gcmx5zkopjj30u20b8tam.jpg" alt="截屏2020-03-08下午11.06.11" style="zoom:50%;" />
 
+<img src="https://tva1.sinaimg.cn/large/00831rSTly1gcmx72grwgj30ue08m0tr.jpg" alt="截屏2020-03-08下午11.07.28" style="zoom:50%;" />
 
-![[公式]](https://www.zhihu.com/equation?tex=w_%7Bji%7D%5E%7B%28k%29%7D%5Cleft%28s%2B1%5Cright%29%3Dw_%7Bji%7D%5E%7B%28k%29%7D%5Cleft%28s%5Cright%29-%5Ceta%5Cfrac%7B%5Cpartial+E%7D%7B%5Cpartial+w_%7Bji%7D%5E%7B%28k%29%7D%7D+%5Cquad%5Cleft%5B2.3%5Cright%5D)
+sigmoid求导
 
+<img src="https://tva1.sinaimg.cn/large/00831rSTly1gcmx8fbtt6j30ny08udgs.jpg" alt="截屏2020-03-08下午11.08.32" style="zoom:50%;" />
 
+也可以将前两项用dlert代替
 
-对每一个提交给神经网络的样本用式 [2.3] 对全体权值进行一次更新，直到所有样本的误差值都小于一个预设的阈值。训练的关键问题是如何计算![[公式]](https://www.zhihu.com/equation?tex=%5Ctriangledown+E)，即如何计算每一个![[公式]](https://www.zhihu.com/equation?tex=%5Cfrac%7B%5Cpartial+E%7D%7B%5Cpartial+w_%7Bji%7D%5E%7B%28k%29%7D%7D+)。
+<img src="https://tva1.sinaimg.cn/large/00831rSTly1gcmxd9228zj30hy02c0sr.jpg" alt="853467-20160630153405296-436656179" style="zoom:50%;" />
 
+w5权重更新
+
+<img src="https://tva1.sinaimg.cn/large/00831rSTly1gcmxe913bsj30ti02e0t0.jpg" alt="853467-20160630153614374-1624035276" style="zoom: 50%;" />
+
+学习率这里取得0.5
+
+隐含层权重更新
 
 
 
