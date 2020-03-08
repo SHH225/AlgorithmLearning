@@ -266,6 +266,34 @@ PCA 的数学推导可以从最大可分型和最近重构性两方面进行，�
 
 为了计算代价函数的偏导数，我们需要采用一种反向传播算法，也就是首先计算最后一层的误差，然后再一层一层反向求出各层的误差，直到倒数第二层。
 
+**例子：**
+
+训练集中的样本形如：![[公式]](https://www.zhihu.com/equation?tex=%5Cleft%5B%5Ctextbf%7Bx%7D%2C%5Cbar%7B%5Ctextbf%7By%7D%7D%5Cright%5D%3D%5Cleft%5B%5Cleft%28x_%7B1%7D%2Cx_%7B2%7D%2C%5Cdots%2Cx_%7Bn_0%7D%5Cright%29%5ET%2C+%5C+%5Cleft%28%5Cbar%7By%7D_%7B1%7D%2C%5Cbar%7By%7D_%7B2%7D%2C%5Cdots%2C%5Cbar%7By%7D_%7Bn_K%7D%5Cright%29%5ET%5Cright%5D)。输入包含![[公式]](https://www.zhihu.com/equation?tex=n_0)个值，目标值包含![[公式]](https://www.zhihu.com/equation?tex=n_K)个值，分别对应神经网络的输入／输出维度。训练这样进行：将训练集中的样本一个接一个提交给神经网络。神经网络对样本输入![[公式]](https://www.zhihu.com/equation?tex=%5Ctextbf%7Bx%7D)计算输出![[公式]](https://www.zhihu.com/equation?tex=%5Ctextbf%7By%7D)，然后计算样本目标值与输出的平方和误差：
+
+![equation](/Users/pluto/Desktop/equation.svg)
+
+视输入![[公式]](https://www.zhihu.com/equation?tex=%5Ctextbf%7Bx%7D)为固定值，把 E 当作全体权值![[公式]](https://www.zhihu.com/equation?tex=%5Ctextbf%7BW%7D%3D%5Cleft%5C%7Bw_%7Bji%7D%5E%7B%28k%29%7D%5Cright%5C%7D)的函数。求 E 的梯度![[公式]](https://www.zhihu.com/equation?tex=%5Ctriangledown+E)，然后用下式更新全体权值：
+
+
+
+![[公式]](https://www.zhihu.com/equation?tex=%5Ctextbf%7BW%7D%5Cleft%28s%2B1%5Cright%29%3D%5Ctextbf%7BW%7D%5Cleft%28s%5Cright%29-%5Ceta+%5Ctriangledown+E+%5Cquad%5Cleft%5B2.2%5Cright%5D)
+
+
+
+[2.2] 是梯度下降法的更新式。其中![[公式]](https://www.zhihu.com/equation?tex=%5Ceta)是步长，s 是迭代次数。梯度矩阵![[公式]](https://www.zhihu.com/equation?tex=%5Ctriangledown+E)由 E 对每一个权重![[公式]](https://www.zhihu.com/equation?tex=w_%7Bji%7D%5E%7B%28k%29%7D)的偏导数![[公式]](https://www.zhihu.com/equation?tex=%5Cfrac%7B%5Cpartial+E%7D%7B%5Cpartial+w_%7Bji%7D%5E%7B%28k%29%7D%7D+)构成。式 [2.2] 等价于对每一个权重进行更新：
+
+
+
+![[公式]](https://www.zhihu.com/equation?tex=w_%7Bji%7D%5E%7B%28k%29%7D%5Cleft%28s%2B1%5Cright%29%3Dw_%7Bji%7D%5E%7B%28k%29%7D%5Cleft%28s%5Cright%29-%5Ceta%5Cfrac%7B%5Cpartial+E%7D%7B%5Cpartial+w_%7Bji%7D%5E%7B%28k%29%7D%7D+%5Cquad%5Cleft%5B2.3%5Cright%5D)
+
+
+
+对每一个提交给神经网络的样本用式 [2.3] 对全体权值进行一次更新，直到所有样本的误差值都小于一个预设的阈值。训练的关键问题是如何计算![[公式]](https://www.zhihu.com/equation?tex=%5Ctriangledown+E)，即如何计算每一个![[公式]](https://www.zhihu.com/equation?tex=%5Cfrac%7B%5Cpartial+E%7D%7B%5Cpartial+w_%7Bji%7D%5E%7B%28k%29%7D%7D+)。
+
+
+
+
+
 
 
 ### Onehot编码
